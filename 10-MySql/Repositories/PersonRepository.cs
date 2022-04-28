@@ -21,12 +21,13 @@ public class PersonRepository
         {
             var person = new Person()
             {
-                id = reader.GetInt16("id"),
+                Id = reader.GetInt16("id"),
                 Name = reader.GetString("name"),
                 Age = reader.GetInt16("age")
             };
             result.Add(person);
         }
+        appDb.Connection.Close();
 
         return result;
     }
@@ -49,13 +50,15 @@ public class PersonRepository
         {
             var person = new Person()
             {
-                id = reader.GetInt16("id"),
+                Id = reader.GetInt16("id"),
                 Name = reader.GetString("name"),
                 Age = reader.GetInt16("age")
             };
+            appDb.Connection.Close();
             return person;
         }
 
+        appDb.Connection.Close();
         return null;
     }
 
@@ -68,7 +71,7 @@ public class PersonRepository
         {
             ParameterName = "id",
             DbType = System.Data.DbType.Int16,
-            Value = person.id
+            Value = person.Id
         };
         command.Parameters.Add(parameterId);
         var parameterName = new MySqlParameter()
@@ -85,10 +88,12 @@ public class PersonRepository
             Value = person.Age
         };
         command.Parameters.Add(parameterAge);
-        return Convert.ToBoolean(command.ExecuteNonQuery());
+        var result = Convert.ToBoolean(command.ExecuteNonQuery());
+        appDb.Connection.Close();
+        return result;
     }
 
-    public bool Update(int id, Person person)
+    public bool Update(Person person)
     {
         appDb.Connection.Open();
         var command = appDb.Connection.CreateCommand();
@@ -97,7 +102,7 @@ public class PersonRepository
         {
             ParameterName = "id",
             DbType = System.Data.DbType.Int16,
-            Value = id
+            Value = person.Id
         };
         command.Parameters.Add(parameterId);
         var parameterName = new MySqlParameter()
@@ -114,7 +119,9 @@ public class PersonRepository
             Value = person.Age
         };
         command.Parameters.Add(parameterAge);
-        return Convert.ToBoolean(command.ExecuteNonQuery());
+        var result = Convert.ToBoolean(command.ExecuteNonQuery());
+        appDb.Connection.Close();
+        return result;
     }
 
     public bool Delete(int id)
@@ -129,8 +136,9 @@ public class PersonRepository
             Value = id
         };
         command.Parameters.Add(parameterId);
-        return Convert.ToBoolean(command.ExecuteNonQuery());
+        var result = Convert.ToBoolean(command.ExecuteNonQuery());
+        appDb.Connection.Close();
+        return result;
     }
-
 
 }

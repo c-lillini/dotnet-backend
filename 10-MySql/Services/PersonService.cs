@@ -19,18 +19,32 @@ public class PersonService
 
     public bool Create(Person person)
     {
-        return personRepository.Create(person);
+        if (personRepository.GetPerson(person.Id) == null)
+        {
+            if (person.Age < 18)
+            {
+                return false;
+            }
+            else
+            {
+                return personRepository.Create(person);
+            }
+        }
+        else
+        {
+            return false;
+        }
+
     }
 
-    public bool Update(int id, Person person)
+    public bool Update(Person person)
     {
-        return personRepository.Update(id, person);
+        return personRepository.Update(person);
     }
 
     public bool Delete(int id)
     {
         return personRepository.Delete(id);
     }
-
 
 }

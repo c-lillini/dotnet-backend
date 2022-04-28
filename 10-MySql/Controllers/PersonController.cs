@@ -5,8 +5,9 @@ namespace _7_WebApi.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CrudController : ControllerBase
+public class PersonController : ControllerBase
 {
+
     private PersonService personService = new PersonService();
 
     [HttpGet]
@@ -16,7 +17,7 @@ public class CrudController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public ActionResult<Person> GetPerson(int id)
+    public Person GetPerson(int id)
     {
         return personService.GetPerson(id);
     }
@@ -24,26 +25,26 @@ public class CrudController : ControllerBase
     [HttpPost]
     public IActionResult Create(Person person)
     {
-        var result = personService.Create(person);
-
-        if (result)
+        var created = personService.Create(person);
+        if (created)
         {
             return Ok();
+
         }
         else
         {
-            return NotFound();
+            return BadRequest();
         }
     }
 
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, [FromBody] Person person)
+    [HttpPut]
+    public IActionResult Update(Person person)
     {
-        var result = personService.Update(id, person);
-
-        if (result)
+        var updated = personService.Update(person);
+        if (updated)
         {
             return Ok();
+
         }
         else
         {
@@ -54,18 +55,15 @@ public class CrudController : ControllerBase
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
-        var result = personService.Delete(id);
-
-        if (result)
+        var deleted = personService.Delete(id);
+        if (deleted)
         {
             return Ok();
+
         }
         else
         {
             return BadRequest();
         }
     }
-
-
-
 }
