@@ -1,5 +1,7 @@
 using _7_WebApi.Repositories;
 using _7_WebApi.Models;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace _7_WebApi.Service;
 
@@ -46,6 +48,13 @@ public class PersonService
     public bool Delete(int id)
     {
         return personRepository.Delete(id);
+    }
+
+    public string HashPassword(string plainText)
+    {
+        var byteArray = ASCIIEncoding.ASCII.GetBytes(plainText);
+        byte[] mySHA256 = SHA256.Create().ComputeHash(byteArray);
+        return Convert.ToBase64String(mySHA256);
     }
 
 }
