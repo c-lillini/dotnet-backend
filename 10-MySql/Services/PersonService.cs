@@ -22,7 +22,7 @@ public class PersonService
     {
         if (personRepository.GetPerson(person.Id) == null)
         {
-            if (person.Age < 18)
+            if ((person.Name.Length > 0) && (person.Age < 18))
             {
                 return false;
             }

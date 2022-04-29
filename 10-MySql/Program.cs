@@ -14,6 +14,24 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    app.UseExceptionHandler(exceptionHandlerApp =>
+    {
+        exceptionHandlerApp.Run(async context =>
+        {
+            context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+
+            context.Response.ContentType = System.Net.Mime.MediaTypeNames.Text.Plain;
+
+            await context.Response.WriteAsync("An exception was thrown.");
+
+            var exceptionHandlerPathFeature =
+                context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerPathFeature>();
+
+            await context.Response.WriteAsync(exceptionHandlerPathFeature?.Error.Message);
+            await context.Response.WriteAsync(exceptionHandlerPathFeature?.Error.StackTrace);
+
+        });
+    });
 }
 
 app.UseHttpsRedirection();
