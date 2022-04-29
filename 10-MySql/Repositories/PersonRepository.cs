@@ -32,7 +32,7 @@ public class PersonRepository
         return result;
     }
 
-    public Person GetPerson(int id)
+    public Person GetPerson(int? id)
     {
         appDb.Connection.Open();
         var command = appDb.Connection.CreateCommand();
@@ -66,14 +66,7 @@ public class PersonRepository
     {
         appDb.Connection.Open();
         var command = appDb.Connection.CreateCommand();
-        command.CommandText = "insert into person (id,name,age) values (@id,@name,@age)";
-        var parameterId = new MySqlParameter()
-        {
-            ParameterName = "id",
-            DbType = System.Data.DbType.Int16,
-            Value = person.Id
-        };
-        command.Parameters.Add(parameterId);
+        command.CommandText = "insert into person (name,age) values (@name,@age)";
         var parameterName = new MySqlParameter()
         {
             ParameterName = "name",
