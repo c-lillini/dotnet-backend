@@ -1,4 +1,4 @@
-namespace _7_WebApi;
+namespace _7_WebApi.Models;
 
 public class Person
 {

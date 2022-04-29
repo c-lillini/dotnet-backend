@@ -1,5 +1,6 @@
 using _7_WebApi.Context;
 using MySql.Data.MySqlClient;
+using _7_WebApi.Models;
 
 namespace _7_WebApi.Repositories;
 

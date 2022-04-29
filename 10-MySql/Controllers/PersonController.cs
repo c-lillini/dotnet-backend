@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using _7_WebApi.Service;
+using _7_WebApi.Models;
 
 namespace _7_WebApi.Controllers;
 

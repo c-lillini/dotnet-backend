@@ -1,4 +1,5 @@
 using _7_WebApi.Repositories;
+using _7_WebApi.Models;
 
 namespace _7_WebApi.Service;
 
